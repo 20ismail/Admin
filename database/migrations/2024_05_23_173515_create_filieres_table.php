@@ -11,26 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cordonateurs', function (Blueprint $table) {
+        Schema::create('filieres', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('email')->unique();
-            $table->string('numTelephone');
-            $table->string('motDePasse');
-            $table->string('type');
+            $table->string('intitule')->nullable();
+            $table->string('cycle')->nullable();
+            $table->foreignId('idDepartement')->constrained('departements')->onDelete('cascade');
+            $table->foreignId('idSemestre')->constrained('semestres')->onDelete('cascade');
             $table->timestamps();
         });
     }
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('coordinateurs');
+        Schema::dropIfExists('filieres');
     }
 };
-
-

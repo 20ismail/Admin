@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Coordinateur;
+use App\Models\Composent;
 use Illuminate\Http\Request;
 
-class CoordinateurController extends Controller
+class ComposentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CoordinateurController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Coordinateur $coordinateur)
+    public function show(Composent $composent)
     {
         //
     }
@@ -42,7 +42,7 @@ class CoordinateurController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Coordinateur $coordinateur)
+    public function edit(Composent $composent)
     {
         //
     }
@@ -50,7 +50,7 @@ class CoordinateurController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Coordinateur $coordinateur)
+    public function update(Request $request, Composent $composent)
     {
         //
     }
@@ -58,7 +58,7 @@ class CoordinateurController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Coordinateur $coordinateur)
+    public function destroy(Composent $composent)
     {
         //
     }

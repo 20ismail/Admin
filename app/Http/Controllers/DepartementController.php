@@ -13,6 +13,7 @@ class DepartementController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -21,6 +22,7 @@ class DepartementController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -29,6 +31,7 @@ class DepartementController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -37,6 +40,7 @@ class DepartementController extends Controller
     public function show(Departement $departement)
     {
         //
+
     }
 
     /**
@@ -45,6 +49,7 @@ class DepartementController extends Controller
     public function edit(Departement $departement)
     {
         //
+        
     }
 
     /**

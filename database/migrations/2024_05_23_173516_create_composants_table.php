@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vacataires', function (Blueprint $table) {
+        Schema::create('composants', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('email');
-            $table->unsignedBigInteger('id_cordonateur');
+            $table->string('intitule')->nullable();
+            $table->integer('nbr_groupes')->nullable();
+            $table->unsignedBigInteger('idModule')->nullable();
+            $table->foreign('idModule')->references('id')->on('modules')->onDelete('cascade');
             $table->timestamps();
-
-            // Foreign key constraint
-            $table->foreign('id_cordonateur')->references('id')->on('cordonateurs')->onDelete('cascade');
-
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vacataires');
+        Schema::dropIfExists('composants');
     }
 };

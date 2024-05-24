@@ -1,0 +1,92 @@
+/* Style pour le conteneur principal */
+.container {
+    width: 90%; /* Largeur de 90% de la fenêtre */
+    max-width: 800px; /* Largeur maximale de 800px */
+    height: auto; /* Hauteur automatique pour s'adapter au contenu */
+    margin: 0 auto;
+    padding: 20px;
+    border: 3px solid #DAC0A3;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative; /* Pour positionner le bouton */
+}
+
+/* Style pour l'image de profil */
+.profile-image {
+    float: left;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-bottom:10px;
+}
+
+/* Style pour les informations du profil */
+.profile-info {
+    overflow: hidden;
+    margin-top: 25px;
+    
+}
+
+/* Style pour le nom et l'email */
+.profile-info p {
+    margin: 5px 0;
+}
+
+/* Style pour la fiche d'informations */
+.information-card {
+    border: 3px solid #DAC0A3;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 40px;
+    position: relative; /* Pour positionner le bouton */
+}
+
+/* Style pour le bouton de modification */
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inf {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.btn-modifier {
+    padding: 10px 20px;
+    background-color: #102C57;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style pour rendre la mise en page responsive */
+@media screen and (max-width: 600px) {
+    .profile-info {
+        text-align: center;
+    }
+    .profile-image {
+        float: none;
+        margin: 0 auto 20px;
+    }
+}
+.nom{
+    font-size: 25px;
+    /* font-size: 2px; */
+    font-weight: bold;
+    color: #000000;
+   
+}
+.role{
+    font-size: 14px;
+    color: #adabab;
+    font-weight: bold;
+}
+.email{
+    font-size: 17px;
+}

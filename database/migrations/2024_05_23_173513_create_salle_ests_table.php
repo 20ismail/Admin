@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groupes', function (Blueprint $table) {
+        Schema::create('salle_ests', function (Blueprint $table) {
             $table->id();
-            $table->integer('numeroGroupe');
-            $table->string('type');
-            $table->integer('nbrEtudiants');
-            $table->unsignedBigInteger('idSemestre');
-            $table->foreign('idSemestre')->references('id')->on('semestres')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('TypeSalle')->nullable();
+            $table->integer('numero')->nullable();
+            $table->foreignId('idAdministrateur')->constrained('administrateurs')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groupes');
+        Schema::dropIfExists('salle_ests');
     }
 };

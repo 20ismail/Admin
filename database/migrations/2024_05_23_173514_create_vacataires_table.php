@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('salle_ests', function (Blueprint $table) {
+        Schema::create('vacataires', function (Blueprint $table) {
             $table->id();
-            $table->string('TypeSalle');
-            $table->integer('numero');
-            $table->unsignedBigInteger('idCordonateur');
-            $table->foreign('idCordonateur')->references('id')->on('cordonateurs')->onDelete('cascade');
+            $table->string('nom')->nullable();
+            $table->string('prenom')->nullable();
+            $table->string('email')->nullable();
+            $table->foreignId('idAdministrateur')->constrained('administrateurs')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('salle_ests');
+        Schema::dropIfExists('vacataires');
     }
 };

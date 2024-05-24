@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('secretaires', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('email')->unique();
-            $table->string('numTelephone');
-            $table->string('motDePasse');
-            $table->string('type');
-            $table->unsignedBigInteger('id_cordonateur');
+            $table->string('nom')->nullable();
+            $table->string('prenom')->nullable();
+            $table->string('email')->nullable();
+            $table->string('numTelephone')->nullable();
+            $table->string('password')->nullable();
+            $table->string('type')->nullable();
+            $table->foreignId('idAdministrateur')->constrained('administrateurs')->onDelete('cascade');
+
             $table->timestamps();
-
-            // Définir la clé étrangère
-            $table->foreign('id_cordonateur')->references('id')->on('cordonateurs')->onDelete('cascade');
-
         });
     }
 

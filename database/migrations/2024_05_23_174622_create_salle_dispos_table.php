@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('salle_dispos', function (Blueprint $table) {
             $table->id();
-            $table->string('typeSalle');
-            $table->integer('numero');
-            $table->boolean('disponibilite');
-            $table->string('jour');
-            $table->boolean('matin');
-            $table->boolean('apres_midi');
+            $table->boolean('disponibilite')->nullable();
+            $table->string('jour')->nullable();
+            $table->boolean('matin')->nullable();
+            $table->boolean('apres_midi')->nullable();
             $table->unsignedBigInteger('idSecretaire');
             $table->foreign('idSecretaire')->references('id')->on('secretaires')->onDelete('cascade');
-            $table->timestamps();
-
         });
     }
 

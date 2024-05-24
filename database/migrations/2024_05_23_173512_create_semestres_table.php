@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('semestres', function (Blueprint $table) {
             $table->id();
-            $table->integer('numeroSemestre');
-            $table->string('saison');
-            $table->integer('nbrSemaines');
-           
+            $table->integer('numeroSemestre')->nullable();
+            $table->string('saison')->nullable();
+            $table->integer('nbrSemaine')->nullable();
             $table->timestamps();
 
         });
