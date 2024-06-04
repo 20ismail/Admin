@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Filiere extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'intitule_filiere',
+        'cycle',
+        'idDepartement'
+    ];
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'id_filiere', 'id');
+    }
+    
+
 }

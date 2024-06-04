@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('filieres', function (Blueprint $table) {
             $table->id();
-            $table->string('intitule')->nullable();
+            $table->string('intitule_filiere')->nullable();
             $table->string('cycle')->nullable();
             $table->foreignId('idDepartement')->constrained('departements')->onDelete('cascade');
-            $table->foreignId('idSemestre')->constrained('semestres')->onDelete('cascade');
+            // $table->foreignId('idSemestre')->constrained('semestres')->onDelete('cascade');
             $table->timestamps();
         });
     }

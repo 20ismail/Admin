@@ -1,18 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\DisponibiliteProf;
+use App\Models\Professeur;
+use App\Models\Disponibilite_prof;
 use Illuminate\Http\Request;
-
+use DB;
 class DisponibiliteProfController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+    {   
+        $mons=Professeur::all();
+        $prof = DB::table('disponibilite_profs')
+        ->join('professeurs', 'disponibilite_profs.id_prof', '=', 'professeurs.id')
+        ->select('*', 'disponibilite_profs.id', 'professeurs.id as id_professeur')
+        ->paginate(15); // 15 is the number of items per page
+    
+// dd($prof);
+    return view('dispo',compact('prof','mons'));
     }
 
     /**
@@ -34,7 +41,7 @@ class DisponibiliteProfController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DisponibiliteProf $disponibiliteProf)
+    public function show(Disponibilite_prof $disponibilite_prof)
     {
         //
     }
@@ -42,7 +49,7 @@ class DisponibiliteProfController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DisponibiliteProf $disponibiliteProf)
+    public function edit(Disponibilite_prof $disponibilite_prof)
     {
         //
     }
@@ -50,7 +57,7 @@ class DisponibiliteProfController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DisponibiliteProf $disponibiliteProf)
+    public function update(Request $request, Disponibilite_prof $disponibilite_prof)
     {
         //
     }
@@ -58,8 +65,11 @@ class DisponibiliteProfController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DisponibiliteProf $disponibiliteProf)
+    public function destroy(Disponibilite_prof $Disponibilite_prof)
     {
-        //
+        // dd( $Disponibilite_prof);
+        $Disponibilite_prof->delete();
+        return redirect()->back()->with('success', 'Disponibilité du professeur supprimée avec succès!');
     }
 }
+

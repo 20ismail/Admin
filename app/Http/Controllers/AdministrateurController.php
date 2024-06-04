@@ -51,10 +51,10 @@ class AdministrateurController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Administrateur $Administrateur)
+    public function update(Request $request, Administrateur $administrateur)
     {   
         // dd('test');
-        // dd($request>id);
+        // dd($request->id);
         
         $request->validate([
             'nom' => 'nullable|string',
@@ -65,23 +65,26 @@ class AdministrateurController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         
-        
-        $Administrateur->nom=$request->input('nom');
-        $Administrateur->prenom=$request->input('prenom');
-        $Administrateur->email=$request->input('email');
-        $Administrateur->numTelephone=$request->input('numTelephone');
+        // dd('hhh');
+        $administrateur->id=Auth::user()->id;
+        $administrateur->nom=$request->input('nom');
+        $administrateur->prenom=$request->input('prenom');
+        $administrateur->email=$request->input('email');
+        $administrateur->numTelephone=$request->input('numTelephone');
 
         if($request->input('password') != NULL){
-            $Administrateur->password=hash::make($request->input('password'));
+            $administrateur->password=hash::make($request->input('password'));
         }
         
         if ($request->hasFile('image')) {
             
             $imagePath = $request->file('image')->store('profile','public');
-            $Administrateur->image = $imagePath;
+            $administrateur->image = $imagePath;
         }
-       
-       $Administrateur->update();
+    //    dd($Administrateur->save());
+        // dd($Administrateur);
+    //    dd();
+       $administrateur->update();
         
         
         return redirect()->back();

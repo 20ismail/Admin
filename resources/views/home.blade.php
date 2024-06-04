@@ -42,7 +42,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="{{ route('admins.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('administrateurs.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

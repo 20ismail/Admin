@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('numTelephone')->nullable();
             $table->string('password')->nullable();
+            $table->string('departement')->nullable();
             $table->string('type')->nullable();
             $table->foreignId('idAdministrateur')->constrained('administrateurs')->onDelete('cascade');
 

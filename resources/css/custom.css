@@ -228,8 +228,12 @@ overflow:auto;
    
      #sidebar ul li a:hover{
 		  background-color:#DAC0A3;
-		  color:#102C57;
+		  color:#ffffff;
 		  border-radius: 2px;
+		 text-decoration: none;
+		 .fa-solid{
+			color: #ffffff;
+		 }
 	 }
    
    

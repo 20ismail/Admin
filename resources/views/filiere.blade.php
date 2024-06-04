@@ -43,65 +43,53 @@
               </thead>
               
               <tbody>
-                  <tr>
-                 <td>Informatique</td>
-                 <td>DUT</td>
-                 <td>Genie Informatique</td>
-                 <td>
-                    <a href="#editFiliereModal" class="edit" data-toggle="modal">
-                   <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                   </a>
-                   <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" >
-                   <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
-                   </a>
-                 </td>
-                 </tr>
-                
-                 <tr>
-                    <td>TM</td>
-                    <td>DUT</td>
-                    <td>Techniques de Management</td>
+                @foreach ($filiere as $item)
+                <tr>
+                    <td>{{$item->intitule}}</td>
+                    <td>{{$item->cycle}}</td>
+                    <td>{{$item->intitule_filiere}}</td>
                     <td>
-                       <a href="#editFiliereModal" class="edit" data-toggle="modal">
-                      <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
-                      </a>
-                      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                      <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
-                      </a>
+                      <a href="{{route('filieres.edit',$item->filier_id )}}" class="edit" >
+                        <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
+                    </a>
+                      <a href="#deleteConfirmModal" class="delete" data-toggle="modal" data-id="{{ $item->filier_id }}">
+                        <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
+                     </a>
                     </td>
                     </tr>
-    
-                    <tr>
-                        <td>Informatique</td>
-                        <td>Master</td>
-                        <td>Big Data</td>
-                        <td>
-                           <a href="#editFiliereModal" class="edit" data-toggle="modal">
-                          <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
-                          </a>
-                          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                          <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
-                          </a>
-                        </td>
-                        </tr>
+                @endforeach
+                  
+                <div id="deleteConfirmModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">						
+                                <h4 class="modal-title">Confirmer la suppression</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">					
+                                <p>Êtes-vous sûr de vouloir supprimer cet enregistrement ?</p>
+                                <p class="text-warning"><small>Cette action ne peut pas être annulée.</small></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                <form id="deleteForm" action="" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
                      <!-- Autres lignes de filières -->
               </tbody>
-              
+             
         
            </table>
            <div class="clearfix">
-            <div class="hint-text">Affichage De <b>3</b> sur <b>25</b></div>
-            <ul class="pagination">
-               <li class="page-item "><a href="#"class="page-link">Précédent</a></li>
-               <li class="page-item "><a href="#"class="page-link">1</a></li>
-               <li class="page-item "><a href="#"class="page-link">2</a></li>
-               <li class="page-item active"><a href="#"class="page-link">3</a></li>
-               <li class="page-item "><a href="#"class="page-link">4</a></li>
-               <li class="page-item "><a href="#"class="page-link">5</a></li>
-               <li class="page-item "><a href="#" class="page-link">Suivant</a></li>
-            </ul>
-          </div>
-           </div>
+            <div class="hint-text">Affichage de <b>{{$filiere->count()}}</b> sur <b>{{$filiere->total()}}</b></div>
+            {{$filiere->links() }}
         </div>
         
         <!-- Modal d'ajout de filière -->
@@ -114,107 +102,55 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="Département">Département</label>
-                            <select class="form-control" id="cycle" required>
-                                <option value="Informatique">Informatique</option>
-                                <option value="TM">TM</option>
-                                <option value="TACQ">TACQ</option>
-                                <option value="MI">MI</option>
-                            </select>
-                        </div> 
-                        <div class="form-group">
-                            <label for="cycle">Cycle</label>
-                            <select class="form-control" id="cycle" required>
-                                <option value="DUT">DUT</option>
-                                <option value="Licence">Licence</option>
-                                <option value="Master">Master</option>
-                            </select>
+                    <form action="{{route('filieres.store')}}" method="POST">
+                        @csrf
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="Département">Département</label>
+                                <select class="form-control" id="cycle" name="departement" required>
+                                    @foreach ($departement as $item)
+                                    <option value="{{$item->intitule}}">{{$item->intitule}}</option>
+                                    @endforeach
+                                    {{-- <option value="Informatique">Informatique</option>
+                                    <option value="TM">TM</option>
+                                    <option value="TACQ">TACQ</option>
+                                    <option value="MI">MI</option> --}}
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label for="cycle">Cycle</label>
+                                <select class="form-control" id="cycle" name="cycle" required>
+                                    <option value="DUT">DUT</option>
+                                    <option value="Licence">Licence</option>
+                                    <option value="Master">Master</option>
+                                </select>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="niveau">Niveau</label>
+                                <input type="number" class="form-control" id="niveau" required>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="intitule">Intitulé</label>
+                                <input type="text" class="form-control" id="int" name="name" required>
+                            </div>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="niveau">Niveau</label>
-                            <input type="number" class="form-control" id="niveau" required>
-                        </div> -->
-                        <div class="form-group">
-                            <label for="intitule">Intitulé</label>
-                            <input type="text" class="form-control" id="intitule" required>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-can" data-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-success btn-addsalle">Ajouter</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-can" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-success btn-addsalle">Ajouter</button>
-                    </div>
+                    </form>
+                    
                 </div>
             </div>
         </div>
         
         <!-- Modal de modification de filière -->
-        <div class="modal fade" id="editFiliereModal" tabindex="-1" role="dialog" aria-labelledby="editFiliereModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editFiliereModalLabel">Modifier une Filière</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="Département">Département</label>
-                            <select class="form-control" id="cycle" required>
-                                <option value="Informatique">Informatique</option>
-                                <option value="TM">TM</option>
-                                <option value="TACQ">TACQ</option>
-                                <option value="MI">MI</option>
-                            </select>
-                        </div> 
-                        <div class="form-group">
-                            <label for="cycleEdit">Cycle</label>
-                            <select class="form-control" id="cycleEdit" required>
-                                <option value="DUT">DUT</option>
-                                <option value="Licence">Licence</option>
-                                <option value="Master">Master</option>
-                            </select>
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="niveauEdit">Niveau</label>
-                            <input type="number" class="form-control" id="niveauEdit" required>
-                        </div> -->
-                        <div class="form-group">
-                            <label for="intituleEdit">Intitulé</label>
-                            <input type="text" class="form-control" id="intituleEdit" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-can" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-success btn-addsalle">Enregistrer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+     
         
         <!-- Modal de confirmation de suppression -->
-        <div class="modal fade" tabindex="-1" id="deleteEmployeeModal" role="dialog">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">Supprimer Filière</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            <p>Êtes-vous sûr de vouloir supprimer cet enregistrement ?</p>
-            <p class="text-warning"><small>Cette action ne peut pas être annulée.</small></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-can" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-success btn-addsalle">Supprimer</button>
-                </div>
-            </div>
-        </div>
-    </div>
+     
+
     <script>
        document.addEventListener("DOMContentLoaded", function() {
         // Ajouter le gestionnaire d'événements pour le filtre de cycle
@@ -233,8 +169,16 @@
             });
         });
     });
-</script>
     </script>
-    
+    <script>
+         $(document).ready(function(){
+            $('.delete').on('click', function(){
+                var id = $(this).data('id');
+                var url = '{{ route("filieres.destroy", ":id") }}';
+                url = url.replace(':id', id);
+                $('#deleteForm').attr('action', url);
+            });
+        });
+    </script>
     
 </x-dashboard>

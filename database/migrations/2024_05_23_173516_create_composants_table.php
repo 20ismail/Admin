@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('intitule')->nullable();
             $table->integer('nbr_groupes')->nullable();
-            $table->unsignedBigInteger('idModule')->nullable();
-            $table->foreign('idModule')->references('id')->on('modules')->onDelete('cascade');
+            $table->unsignedBigInteger('idfiliere')->nullable();
+            $table->foreign('idfiliere')->references('id')->on('filieres')->onDelete('cascade');
+            $table->unsignedBigInteger('idsemestre')->nullable();
+            $table->foreign('idsemestre')->references('id')->on('semestres')->onDelete('cascade');
             $table->timestamps();
         });
     }

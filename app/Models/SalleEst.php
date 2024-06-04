@@ -11,7 +11,7 @@ class SalleEst extends Model
     protected $fillable = [
         'TypeSalle',
         'numero',
-        'idCordonateur',
+        'idAdministrateur',
         // Ajoutez d'autres colonnes que vous souhaitez autoriser à être remplies ici
     ];
 }

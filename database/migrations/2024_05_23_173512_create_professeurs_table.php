@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('type')->nullable(); // Ajout de nullable
             $table->unsignedBigInteger('id_admin');
             $table->unsignedBigInteger('id_departement');
-            
-
             // Foreign keys
             $table->foreign('id_admin')->references('id')->on('administrateurs')->onDelete('cascade');
             $table->foreign('id_departement')->references('id')->on('departements')->onDelete('cascade');

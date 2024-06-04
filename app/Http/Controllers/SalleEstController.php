@@ -12,7 +12,7 @@ class SalleEstController extends Controller
      */
     public function index()
     {
-        $salles = SalleEst::all(); // Fetch all Salle records from your database
+        $salles = SalleEst::paginate(15); // Fetch all Salle records from your database
         return view('salle', ['salles' => $salles]);
         //
     }
@@ -45,7 +45,7 @@ class SalleEstController extends Controller
         SalleEst::create([
             'TypeSalle'=>$request->type,
             'numero'=>$request->numero,
-            'idCordonateur'=>$request->id,
+            'idAdministrateur'=>$request->id,
         ]);
         return redirect()->back();
     }
@@ -56,6 +56,7 @@ class SalleEstController extends Controller
     public function show(SalleEst $salleEst)
     {
         //
+
     }
 
     /**
@@ -64,6 +65,8 @@ class SalleEstController extends Controller
     public function edit(SalleEst $salleEst)
     {
         //
+        return view('salleEdit',compact('salleEst'));
+        // dd($salleEst);
     }
 
     /**
@@ -71,7 +74,18 @@ class SalleEstController extends Controller
      */
     public function update(Request $request, SalleEst $salleEst)
     {
-        //
+         $request->validate([
+            'TypeSalle' => 'nullable|string|max:255', // Valider que TypeSalle peut être nul, est une chaîne et ne dépasse pas 255 caractères
+            'numero' => 'nullable|string', // Valider que numero peut être nul et est une chaîne
+        ]);
+
+        $salleEst->TypeSalle=$request->input('TypeSalle');
+        $salleEst->numero=$request->input('numero');
+        $salleEst->idAdministrateur=Auth::user()->id;
+        $salleEst->save();
+
+       
+        return redirect()->route('salleEsts.index')->with('success', 'Mise à jour réussie!');
     }
 
     /**
@@ -79,6 +93,7 @@ class SalleEstController extends Controller
      */
     public function destroy(SalleEst $salleEst)
     {
-        //
+        $salleEst->delete();
+        return redirect()->route('salleEsts.index')->with('success', 'Salle supprimée avec succès!');
     }
 }

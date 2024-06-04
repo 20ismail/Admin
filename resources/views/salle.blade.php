@@ -29,26 +29,29 @@
                             {{-- <th><strong>Jour</strong></th> --}}
                             {{-- <th><strong>Matin</strong></th>
                             <th><strong>Après-midi</strong></th> --}}
-                            <th style="width: 150px;"><strong>action</strong></th>
+                            <th style=""><strong>action</strong></th>
                         </tr>
                     </thead>
                     
                     <tbody>
                         @foreach ($salles as $salle)
                         <tr>
-                            <td>{{ $salle->type }}</td>
+                            <td>{{ $salle->TypeSalle }}</td>
                             <td>{{ $salle->numero }}</td>
                             {{-- <td>{{ $salle->Matin }}</td>
                             <td>{{ $salle->Après_midi }}</td> --}}
                             <td>
-                                <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-                                    <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
-                                </a>
-                                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                                    <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
-                                </a>
+                                    <a href="{{route('salleEsts.edit',$salle->id)}}" class="edit" >
+                                        <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
+                                    </a>
+
+                                    <a href="#deleteConfirmModal" class="delete" data-toggle="modal" data-id="{{ $salle->id }}">
+                                        <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
+                                    </a>
                             </td>
                         </tr>
+                       
+
                         @endforeach
                     </tbody>
                 </table>
@@ -56,20 +59,9 @@
                 </table>
                 
                 <div class="clearfix">
-                    <div class="hint-text">Affichage de <b>5</b> sur <b>25</b></div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Précédent</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Suivant</a></li>
-                    </ul>
+                    <div class="hint-text">Affichage de <b>{{$salles->count()}}</b> sur <b>{{$salles->total()}}</b></div>
+                    {{$salles->links() }}
                 </div>
-                
-            </div>
-        </div>
     
         <!----add-modal start--------->
         <div class="modal fade" tabindex="-1" id="addEmployeeModal" role="dialog">
@@ -113,14 +105,13 @@
                             <button type="submit" class="btn btn-success btn-addsalle">Ajouter</button>
                         </div>
                     </form>
-                    
                 </div>
             </div>
         </div>
         <!----add-modal end--------->
         
         <!----edit-modal start--------->
-        <div class="modal fade" tabindex="-1" id="editEmployeeModal" role="dialog">
+        {{-- <div class="modal fade" tabindex="-1" id="editEmployeeModal" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -132,7 +123,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Type</label>
-                            {{-- <input  type="text" class="form-control" required> --}}
+                           
                             <select class="form-control" id="cycle"   name="type" required>
                                 <option value="Amphi">Amphi</option>
                                 <option value="Mini Amphi">Mini Amphi</option>
@@ -147,7 +138,7 @@
                         <div class="form-group">
                             <label>Numéro</label>
                             <input type="text" class="form-control" required>
-                        </div>
+                        </div> --}}
     <!--
                      
                    <div class="form-group">
@@ -176,7 +167,7 @@
                             </select>
                         </div>  
                     -->
-                    </div>
+                    {{-- </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-can" data-dismiss="modal">Annuler</button>
                         <button type="button" class="btn btn-success btn-addsalle">Sauvegarder</button>
@@ -184,29 +175,45 @@
                 </div>
             </div>
         </div>
-        <!----edit-modal end--------->
+        <!----edit-modal end---------> --}}
         
         <!----delete-modal start--------->
-        <div class="modal fade" tabindex="-1" id="deleteEmployeeModal" role="dialog">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">Supprimer salle</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+       <!-- Modal de confirmation -->
+<div id="deleteConfirmModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">						
+                <h4 class="modal-title">Confirmer la suppression</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-body">
-            <p>Êtes-vous sûr de vouloir supprimer cet enregistrement ?</p>
-            <p class="text-warning"><small>Cette action ne peut pas être annulée.</small></p>
+            <div class="modal-body">					
+                <p>Êtes-vous sûr de vouloir supprimer cet enregistrement ?</p>
+                <p class="text-warning"><small>Cette action ne peut pas être annulée.</small></p>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-can" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-success btn-addsalle">Supprimer</button>
-            </div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <form id="deleteForm" action="" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
             </div>
         </div>
-        <!----delete-modal end--------->
     </div>
+</div>
+      <!----delete-modal end--------->
+    </div>
+
+    <script>
+    $(document).ready(function(){
+        $('.delete').on('click', function(){
+            var id = $(this).data('id');
+            var url = '{{ route("salleEsts.destroy", ":id") }}';
+            url = url.replace(':id', id);
+            $('#deleteForm').attr('action', url);
+        });
+    });
+</script>
+
     
 </x-dashboard>

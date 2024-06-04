@@ -2,64 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vacataire;
 use Illuminate\Http\Request;
+use App\Models\Vacataire;
+use Illuminate\Support\Facades\Auth;
 
 class VacataireController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $vacataires = Vacataire::paginate(10);
+        // dd('hh');
+        return view('vacataire', compact('vacataires'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Validation des données reçues du formulaire
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:vacataires',
+        ]);
+
+        // Création d'une nouvelle instance de Vacataire avec les données du formulaire
+        $vacataire = new Vacataire([
+            'nom' => $request->input('nom'),
+            'prenom' => $request->input('prenom'),
+            'email' => $request->input('email'),
+            'idAdministrateur' => Auth::id(), // Assuming the logged-in user is the admin
+        ]);
+
+        // Enregistrement du vacataire dans la base de données
+        $vacataire->save();
+
+        // Redirection vers la vue index des vacataires avec un message de succès
+        return redirect()->route('vacataire.index')->with('success', 'Vacataire ajouté avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Vacataire $vacataire)
+    public function edit($id)
     {
-        //
+        $vacataire = Vacataire::findOrFail($id);
+        return view('editVacataire', compact('vacataire'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vacataire $vacataire)
+    public function update(Request $request, $id)
     {
-        //
+        // Validation des données reçues du formulaire
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:vacataires,email,' . $id,
+        ]);
+
+        // Récupération du vacataire à mettre à jour
+        $vacataire = Vacataire::findOrFail($id);
+
+        // Mise à jour des données du vacataire
+        $vacataire->update($request->all());
+
+        // Redirection vers la vue index des vacataires avec un message de succès
+        return redirect()->route('vacataire.index')->with('success', 'Vacataire mis à jour avec succès.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Vacataire $vacataire)
+    public function destroy($id)
     {
-        //
-    }
+        // Suppression du vacataire
+        Vacataire::findOrFail($id)->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Vacataire $vacataire)
-    {
-        //
+        // Redirection vers la vue index des vacataires avec un message de succès
+        return redirect()->route('vacataire.index')->with('success', 'Vacataire supprimé avec succès.');
     }
 }

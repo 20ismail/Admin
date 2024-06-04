@@ -19,6 +19,11 @@
             <link rel="stylesheet" href="css/fiche.css"> --}}
             @vite('resources/css/custom.css')
             @vite('resources/css/fiche.css')
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <!-- Inclure Bootstrap JS -->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <!-- Inclure Bootstrap CSS -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Bootstrap CSS -->
     {{-- <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- CSS3 -->
@@ -45,7 +50,7 @@
         <div id="sidebar">
             <div class="sidebar-header">
                 <h3>
-                    <img src="{{asset('storage/profile/Est_logo.png')}}" style="border-radius: 25px;" class="img-fluid" />
+                    <img src="{{asset('storage/profile/logoEst.png')}}" style="border-radius: 32px; width:68px;" class="img-fluid" />
                     <span>EST SAFI</span>
                 </h3>
             </div>
@@ -59,27 +64,31 @@
                     </span>Salle </a>
                 </li>
                 <li class="">
-                    <a href="{{route('enseignant')}}" class="" id="ensglink"><span <i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;&nbsp;
+                    <a href="{{route('enseignant.index')}}" class="" id="ensglink"><span <i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;&nbsp;
                     </span>Enseignant </a>
                 </li>
                 <li class="">
-                    <a href="{{route('secretaire')}}" class="" id="seclink"><span <i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;&nbsp;
+                    <a href="{{route('seceretaires.index')}}" class="" id="seclink"><span <i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;&nbsp;
                     </span>Secrétaire </a>
                 </li>
                 <li class="">
-                    <a href="{{route('vacataire')}}" class="" id="Vaclink"><span <i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;&nbsp;
+                    <a href="{{route('vacataire.index')}}" class="" id="Vaclink"><span <i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;&nbsp;
                     </span>Vacataire</a>
                 </li>
                 <li class="">
-                    <a href="{{route('module')}}" class="" id="modulelink"><span <i class="fa-solid fa-book"></i>&nbsp;&nbsp;&nbsp;
-                    </span>Module </a>
+                    <a href="{{route('modules.index')}}" class="" id="modulelink"><span <i class="fa-solid fa-book"></i>&nbsp;&nbsp;&nbsp;
+                    </span>Module</a>
                 </li>
                 <li class="">
-                    <a href="{{route('filiere')}}" class="" id="filierelink"><span <i class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;&nbsp;
+                    <a href="{{route('filieres.index')}}" class="" id="filierelink"><span <i class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;&nbsp;
                     </span>Filière </a>
                 </li>
                 <li class="">
-                    <a href="{{route('dispo')}}" class="" id="dispoLink"><span <i class="fa-solid fa-business-time"></i>&nbsp;&nbsp;&nbsp;
+                    <a href="{{route('semestres.index')}}" class="" ><span <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;&nbsp;
+                    </span>Semestre</a>
+                </li>
+                <li class="">
+                    <a href="{{route('Disponibilite_profs.index')}}" class="" id="dispoLink"><span <i class="fa-solid fa-business-time"></i>&nbsp;&nbsp;&nbsp;
                     </span>Disponibilité Enseignant</a>
                 </li>
                 <li class="">
@@ -105,7 +114,7 @@
 
                         <div class="col-md-5 col-lg-3 order-3 order-md-2">
                             <div class="xp-searchbar">
-                                <form>
+                                {{-- <form>
                                     <div class="input-group">
                                         <input type="search" class="form-control" placeholder="Search">
                                         <div class="input-group-append">
@@ -113,7 +122,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
 
@@ -121,7 +130,7 @@
                             <div class="xp-profilebar text-right">
                                 <nav class="navbar p-0">
                                     <ul class="nav navbar-nav flex-row ml-auto">
-                                        <li class="dropdown nav-item active">
+                                        {{-- <li class="dropdown nav-item active">
                                             <a class="nav-link" href="#" data-toggle="dropdown">
                                                 <span class="material-icons">notifications</span>
                                                 <span class="notification">4</span>
@@ -138,7 +147,7 @@
                                             <a class="nav-link" href="#">
                                                 <span class="material-icons">question_answer</span>
                                             </a>
-                                        </li>
+                                        </li> --}}
 
                                         <li class="dropdown nav-item">
                                             <a class="nav-link" href="#" data-toggle="dropdown">
@@ -167,25 +176,15 @@
 
             <!-- Main Content -->
             <div class="main-content">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @include('sweetalert::alert')
                 {{$slot}}
-                {{-- <script>
-                 
-                    function hello() {
-                        fetch("home.html")
-                            .then(response => response.text())
-                            .then(data => {
-                                // Sélectionnez l'élément principal où vous voulez afficher le contenu
-                                var contentDiv = document.querySelector(".main-content");
-                                // Insérez le contenu HTML dans l'élément sélectionné
-                                contentDiv.innerHTML = data;
-
-                            })
-                            .catch(error => {
-                                console.error('Erreur', error);
-                            });
-                    };
-                    hello();
-                </script> --}}
+                
+                
             </div>
             <!-- Main Content End -->
 

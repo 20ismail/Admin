@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('idComposant')->constrained('composants')->onDelete('cascade');
             $table->foreignId('idProfesseur')->constrained('professeurs')->onDelete('cascade');
             $table->foreignId('idFiliere')->constrained('filieres')->onDelete('cascade');
-            $table->foreignId('idSemestre')->constrained('semestres')->onDelete('cascade');
+            // $table->foreignId('idSemestre')->constrained('semestres')->onDelete('cascade');
             $table->timestamps();
     
             
